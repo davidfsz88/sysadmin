@@ -1,0 +1,22 @@
+*****Update portainer docker_swarm*****
+-------------------------------------------
+
+To update Portainer to the latest version, run the following command (you may need to replace the portainer_portainer service name to match your configuration)
+
+
+    #---#   docker service update --image portainer/portainer-ce --force portainer_portainer 
+
+
+To update the Portainer Agent to the latest version, run the following command (you may need to replace the portainer_agent service name to match your settings)
+
+
+    #---#  docker service update --image portainer/agent --force portainer_agent 
+
+
+That will deploy the latest version of Portainer to your system, using the persistent data, and update the database.
+
+Now you can go to http://your-server-address:9000 and login. You should notice that the bottom left corner looks different than it did before. There are no more update issues and the version is no longer displayed next to the Portainer logo.
+
+
+------------------------------------------------------
+___David F. Suárez___
