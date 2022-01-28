@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+        postemail:
+          image: analogic/poste.io
+          deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+              condition: any
+              delay: 5s
+              max_attempts: 5
+              window: 30s
+            rollback_config:
+              order: start-first
+              parallelism: 2
+            update_config:
+              parallelism: 2
+              delay: 10s
+              order: start-first
+          network_mode: "host"
+          networks: 
+            - postemail
+          expose:
+            - 25
+            - 80
+            - 443
+            - 110
+            - 143
+            - 465
+            - 587
+            - 993
+            - 995   
+          volumes:
+            - /root/mail-data:/data
+          environment:
+            - HTTPS=ON
+            - DISABLE_CLAMAV=FALSE
+            - "TZ=America/La_Paz"     #Tu zona horaria#
+            - "VIRTUAL_HOST=mail.dominio.com.bo"
+            - "VIRTUAL_PORT=80"
+            - "LETSENCRYPT_HOST=mail.dominio.com.bo"
+            - "LETSENCRYPT_EMAIL=admin@dominio.com.bo"
+
+networks:
+  postemail:
+   driver: overlay
+   driver_opts:
+      encrypted: "true"
+volumes:
+   data:
